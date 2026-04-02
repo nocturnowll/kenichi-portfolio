@@ -1,0 +1,32 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+button:focus-visible {
+  outline: 2px solid #4a90e2 !important;
+  outline: -webkit-focus-ring-color auto 5px !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Ensure you have these font files in your project folder, 
+   or link them via Google Fonts in your HTML if possible */
+@font-face {
+  font-family: "Cocogoose-Regular";
+  src: local("Cocogoose-Regular");
+}
+
+@font-face {
+  font-family: "Dela Gothic One-Regular";
+  src: local("Dela Gothic One-Regular");
+}
