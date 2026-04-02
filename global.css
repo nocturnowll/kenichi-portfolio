@@ -1,66 +1,76 @@
-@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-* {
-  -webkit-font-smoothing: antialiased;
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+  --color-dark: #21201a;
+  --color-light: #f2ede4;
+  --color-accent: #c05a3a;
+  
+  --font-primary: 'Outfit', sans-serif; /* Equivalent to Cocogoose */
+  --font-secondary: 'Playfair Display', serif;
+  --font-tertiary: 'Roboto', sans-serif;
+  --font-display: 'Dela Gothic One', cursive;
+  --font-mono: 'IBM Plex Mono', monospace;
+  
+  --shadow-subtle: 0px 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0px 10px 30px rgba(0, 0, 0, 0.25);
+  
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+*, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-html,
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
 body {
-  margin: 0px;
-  height: 100%;
+  font-family: var(--font-primary);
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
-/* a blue color as a generic focus style */
-button:focus-visible {
-  outline: 2px solid #4a90e2 !important;
-  outline: -webkit-focus-ring-color auto 5px !important;
-}
+
 a {
   text-decoration: none;
+  color: inherit;
 }
-/* @FONTWARNING[{"type": "restricted", "family": "Cocogoose-Regular", "weight": "400", "style": "normal", "allowsCrossOrigin": false}] */
 
-@font-face {
-  font-family: "Cocogoose-Regular";
-  src: local("Cocogoose-Regular");
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
-/* @FONTWARNING[{"type": "restricted", "family": "Dela Gothic One-Regular", "weight": "400", "style": "normal", "allowsCrossOrigin": false}] */
 
-@font-face {
-  font-family: "Dela Gothic One-Regular";
-  src: local("Dela Gothic One-Regular");
+button, input, textarea {
+  font-family: inherit;
 }
-/* @FONTWARNING[{"type": "restricted", "family": "Cocogoose-Light", "weight": "300", "style": "normal", "allowsCrossOrigin": false}] */
 
-@font-face {
-  font-family: "Cocogoose-Light";
-  src: local("Cocogoose-Light");
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
 }
-/* @FONTWARNING[{"type": "restricted", "family": "Playfair Display-Bold", "weight": "700", "style": "normal", "allowsCrossOrigin": false}] */
 
-@font-face {
-  font-family: "Playfair Display-Bold";
-  src: local("Playfair Display-Bold");
+/* Common Layout Utilities */
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
-/* @FONTWARNING[{"type": "restricted", "family": "Roboto-Light", "weight": "300", "style": "normal", "allowsCrossOrigin": false}] */
 
-@font-face {
-  font-family: "Roboto-Light";
-  src: local("Roboto-Light");
-}
-/* @FONTWARNING[{"type": "restricted", "family": "Roboto-Bold", "weight": "700", "style": "normal", "allowsCrossOrigin": false}] */
-
-@font-face {
-  font-family: "Roboto-Bold";
-  src: local("Roboto-Bold");
-}
-/* @FONTWARNING[{"type": "restricted", "family": "Roboto-Regular", "weight": "400", "style": "normal", "allowsCrossOrigin": false}] */
-
-@font-face {
-  font-family: "Roboto-Regular";
-  src: local("Roboto-Regular");
-}
-/* @FONTWARNING[{"type": "restricted", "family": "IBM Plex Mono-Regular", "weight": "400", "style": "normal", "allowsCrossOrigin": false}] */
-
-@font-face {
-  font-family: "IBM Plex Mono-Regular";
-  src: local("IBM Plex Mono-Regular");
+section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
