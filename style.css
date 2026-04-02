@@ -123,9 +123,9 @@
 
 .chaos-wrapper {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: flex-end;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .text-is-just {
@@ -133,35 +133,42 @@
 }
 
 .chaos-text {
+  position: relative;
   font-family: var(--font-primary);
   font-weight: 700;
-  color: var(--color-accent);
-  display: inline-block;
-  position: relative;
+  display: inline-flex;
+  align-items: baseline;
 }
 
-.chaos-text span {
+.chaos-text > span {
   display: inline-block;
+  line-height: 1;
   transition: var(--transition-smooth);
 }
 
-/* Micro-animations and random rotations for Chaos text */
-.c1 { transform: rotate(-10deg) translateY(-5px); }
-.c2 { transform: rotate(5deg) scale(1.1); font-size: 1.2em; }
-.c3 { transform: rotate(-15deg); }
-.c4 { transform: rotate(20deg) translateY(5px); }
-.c5 { transform: rotate(-5deg) scale(1.2); }
-.c6, .c7, .c8, .c9, .c10, .c11 { 
-  font-size: 0.8em; 
-  transform: rotate(random(-20deg, 20deg)); 
-  margin-left: -5px;
+/* Base Letters */
+.char-c, .char-h, .char-a, .char-o, .char-s {
+  color: var(--color-accent);
 }
-.c7 { transform: translateY(10px) rotate(15deg); }
-.c9 { transform: translateY(-10px) rotate(-15deg); }
+
+.char-c { font-size: 1.1em; text-transform: lowercase; }
+.char-h { font-size: 1.25em; text-transform: uppercase; margin-left: 0.1em; }
+.char-a { font-size: 1em; text-transform: lowercase; margin-left: 0.1em; }
+.char-o { font-size: 0.9em; text-transform: lowercase; font-weight: 900; margin-left: 0.1em; }
+.char-s { font-size: 1.15em; text-transform: uppercase; margin-left: 0.05em; }
+
+/* Symbols Layout */
+.sym-excl { color: var(--color-accent); position: absolute; font-size: 0.5em; top: -5%; left: -6%; transform: rotate(-15deg); }
+.sym-hash-bot { color: var(--color-accent); position: absolute; font-size: 0.6em; bottom: -8%; left: 32%; transform: rotate(10deg); }
+.sym-star { color: var(--color-accent); position: absolute; font-size: 0.5em; top: -10%; left: 54%; transform: rotate(5deg); }
+.sym-excl-db { color: var(--color-accent); position: absolute; font-size: 0.5em; bottom: -15%; left: 74%; transform: rotate(12deg); }
+.sym-hash-top { color: var(--color-accent); position: absolute; font-size: 0.6em; top: 15%; right: -15%; transform: rotate(15deg); }
+.sym-slash { color: var(--color-accent); position: absolute; font-size: 0.7em; bottom: -12%; right: -25%; transform: rotate(-20deg); }
+.sym-comma { color: var(--color-accent); position: absolute; font-size: 0.6em; bottom: 8%; right: -6%; transform: rotate(-5deg); }
 
 .chaos-text:hover span {
-  transform: rotate(0) translateY(0) scale(1);
   color: #ff754a;
+  transform: rotate(0) scale(1) translateY(0);
 }
 
 /* Background lines */
@@ -340,14 +347,16 @@
 
 .timeline-content {
   display: grid;
-  grid-template-columns: 120px 100px 1fr;
+  grid-template-columns: 80px 100px 1fr;
   gap: 1.5rem;
   align-items: flex-start;
 }
 
-.timeline-company {
-  font-weight: 700;
-  color: var(--color-light);
+.company-logo {
+  max-width: 60px;
+  height: auto;
+  object-fit: contain;
+  align-self: flex-start;
 }
 
 .timeline-badge {
@@ -381,19 +390,28 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 1.5rem;
   margin-bottom: 3rem;
+  align-items: center;
 }
 
-.tool-icon {
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
-  border-radius: 50%;
-  opacity: 0.6;
+.tool-icon-img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  opacity: 0.7;
   transition: var(--transition-smooth);
 }
-.tool-icon:hover {
+.tool-icon-img.dimmed {
+  opacity: 0.2;
+  transform: scale(0.9);
+}
+.tool-icon-img.highlighted {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.2);
+  filter: drop-shadow(0px 10px 15px rgba(255,255,255,0.1));
+}
+.tool-icon-img:hover {
+  opacity: 1;
+  transform: scale(1.15);
 }
 
 .skills-list {
@@ -426,15 +444,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
 }
 
 .work-section .section-title {
   font-family: var(--font-primary);
-  font-size: 4rem;
+  font-size: 8rem;
   color: var(--color-accent);
-  position: relative;
-  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
   text-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+}
+
+.work-section:hover .section-title {
+  opacity: 1;
 }
 
 .collage-container {
@@ -467,15 +496,38 @@
   box-shadow: 0px 20px 40px rgba(0,0,0,0.5);
 }
 
-/* Scattering the polaroids */
-.p1 { top: 10%; left: 10%; width: 300px; transform: rotate(-15deg); z-index: 1; }
-.p2 { top: 50%; left: 5%; width: 250px; transform: rotate(10deg); z-index: 2; }
-.p3 { bottom: 10%; left: 20%; width: 350px; transform: rotate(-5deg); z-index: 3; }
-.p4 { top: 15%; right: 25%; width: 280px; transform: rotate(8deg); z-index: 1; }
-.p5 { bottom: 20%; right: 10%; width: 250px; transform: rotate(-12deg); z-index: 2; }
-.p6 { top: 60%; right: 20%; width: 320px; transform: rotate(15deg); z-index: 4; }
-.p7 { top: 10%; left: 45%; width: 220px; transform: rotate(5deg); z-index: 2; }
-.p8 { bottom: 10%; left: 55%; width: 280px; transform: rotate(-8deg); z-index: 3; }
+/* Scattering the polaroids - strict mapping to Figma layers */
+/* Bottom Layer (z-index 10) */
+.p1 { top: 10%; left: 10%; width: 300px; transform: rotate(-10deg); z-index: 10; } /* Riftstorm */
+.p4 { bottom: 15%; left: 10%; width: 280px; transform: rotate(8deg); z-index: 10; } /* Blue bg */
+.p8 { bottom: 10%; right: 10%; width: 320px; transform: rotate(12deg); z-index: 10; } /* Dimple Mockup */
+
+/* Middle Layer (z-index 20) */
+.p3 { top: 20%; left: 35%; width: 280px; transform: rotate(0deg); z-index: 20; } /* Certificate */
+.p5 { top: 40%; left: 25%; width: 350px; transform: rotate(-12deg); z-index: 20; } /* Center hall */
+.p6 { top: 30%; right: 25%; width: 300px; transform: rotate(0deg); z-index: 20; } /* Fugo Hotels */
+
+/* Top Layer (z-index 30) */
+.p2 { top: 5%; right: 15%; width: 250px; transform: rotate(15deg); z-index: 30; } /* Portrait */
+.p7 { bottom: 10%; right: 35%; width: 280px; transform: rotate(-15deg); z-index: 30; } /* White shirts */
+
+/* Sweep Interaction */
+.work-section:hover .p1,
+.work-section:hover .p3,
+.work-section:hover .p4,
+.work-section:hover .p5 {
+  left: -15% !important;
+  transform: rotate(-5deg) scale(0.9) !important;
+}
+
+.work-section:hover .p2,
+.work-section:hover .p6,
+.work-section:hover .p7,
+.work-section:hover .p8 {
+  right: -15% !important;
+  left: auto !important;
+  transform: rotate(5deg) scale(0.9) !important;
+}
 
 /* ==========================================================================
    5. Connect
