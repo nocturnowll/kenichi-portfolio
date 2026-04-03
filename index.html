@@ -65,11 +65,10 @@
 
       <!-- 2. About Section -->
       <section id="about" class="about-section section-dark">
-        <div class="about-background">
-          <!-- Main background image (the park) -->
-          <img class="bg-park" src="img/about-bg-park.jpg" alt="Background Park" />
-        </div>
-        
+        <!-- Two-stage background: default fades to delayed at ~4s -->
+        <img class="about-img about-img-default" src="img/about-default.png" alt="About default" />
+        <img class="about-img about-img-delayed" src="img/about-delayed.png" alt="About full portrait" />
+
         <div class="container about-container">
           <div class="about-content">
             <h2 class="halo">halo!</h2>
@@ -82,13 +81,6 @@
                 I've spent years proving that the best brands don't just sell things, they make people want to gather.
               </p>
             </div>
-          </div>
-
-          <div class="about-visuals">
-            <div class="vertical-text" aria-label="Name: Yao Tiansheng">姚添升</div>
-            <img class="headshot" src="img/headshot.png" alt="Kenichi Edberty" />
-            <img class="anime-character" src="img/anime-character.png" alt="Anime Character" />
-            <img class="mu-logo" src="img/manchester-united-logo.png" alt="Manchester United Logo" />
           </div>
         </div>
       </section>
@@ -234,18 +226,11 @@
 
       <!-- 4. See My Work (Collage) Section -->
       <section id="work" class="work-section section-dark">
+        <!-- Pre-made polaroid collage images (no CSS white borders) -->
+        <img id="polaroids-default" class="polaroids-full" src="img/polaroids.png" alt="See my work polaroids" />
+        <img id="polaroids-hover" class="polaroids-full polaroids-hover-state" src="img/polaroids-hover.png" alt="See my work hover" />
+        <!-- Title revealed on center hover -->
         <h2 class="section-title text-center">See my work</h2>
-        <div class="collage-container">
-          <!-- The polaroids scattered across the screen -->
-          <div class="polaroid p1"><img src="img/work-1.png" alt="Work 1" /></div>
-          <div class="polaroid p2"><img src="img/work-2.png" alt="Work 2" /></div>
-          <div class="polaroid p3"><img src="img/work-3.png" alt="Work 3" /></div>
-          <div class="polaroid p4"><img src="img/work-4.png" alt="Work 4" /></div>
-          <div class="polaroid p5"><img src="img/work-5.png" alt="Work 5" /></div>
-          <div class="polaroid p6"><img src="img/work-6.png" alt="Work 6" /></div>
-          <div class="polaroid p7"><img src="img/work-7.png" alt="Work 7" /></div>
-          <div class="polaroid p8"><img src="img/work-8.png" alt="Work 8" /></div>
-        </div>
       </section>
 
       <!-- 5. Connect Section -->
@@ -263,29 +248,105 @@
     </main>
 
     <script>
-      // Hover animations for Tools & Skills grid based on Career interactions
-      const timelineItems = document.querySelectorAll('.timeline-item');
-      const toolIcons = document.querySelectorAll('.tool-icon-img');
+      // =========================================================
+      // Scroll-Triggered Animations via IntersectionObserver
+      // =========================================================
 
+      const observerOpts = { threshold: 0.25 };
+
+      // --- 1. Hero Section ---
+      const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            document.querySelector('.hero-header')?.classList.add('visible');
+            setTimeout(() => {
+              document.querySelector('.hero-content')?.classList.add('visible');
+            }, 300);
+            heroObserver.disconnect();
+          }
+        });
+      }, observerOpts);
+      const heroSection = document.getElementById('hero');
+      if (heroSection) heroObserver.observe(heroSection);
+
+      // --- 2. About Section: crossfade images and reveal text ---
+      const aboutObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('about-revealed');
+            document.querySelector('.about-content')?.classList.add('visible');
+            aboutObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      const aboutSection = document.getElementById('about');
+      if (aboutSection) aboutObserver.observe(aboutSection);
+
+      // --- 3. Career & Tools Section ---
+      const toolIcons = document.querySelectorAll('.tool-icon-img');
+      const timelineItems = document.querySelectorAll('.timeline-item');
+
+      const careerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Reveal title and skills column first
+            document.querySelector('.cs-title')?.classList.add('visible');
+            setTimeout(() => {
+              document.querySelector('.skills-column')?.classList.add('visible');
+            }, 200);
+
+            // Stagger each timeline item in, and auto-highlight the linked tool
+            timelineItems.forEach((item, i) => {
+              setTimeout(() => {
+                item.classList.add('visible');
+
+                // Auto-highlight the tool linked to this career item
+                const targetId = item.getAttribute('data-target');
+                if (targetId) {
+                  const targetTool = document.getElementById(targetId);
+
+                  // Dim all others briefly, highlight this one
+                  toolIcons.forEach(icon => {
+                    if (icon !== targetTool) icon.classList.add('dimmed');
+                    else {
+                      icon.classList.remove('dimmed');
+                      icon.classList.add('highlighted');
+                      icon.src = icon.src.replace('/white/', '/colored/');
+                    }
+                  });
+
+                  // Reset after a short highlight moment, unless it's the last item
+                  if (i < timelineItems.length - 1) {
+                    setTimeout(() => {
+                      toolIcons.forEach(icon => {
+                        icon.classList.remove('dimmed', 'highlighted');
+                        icon.src = icon.src.replace('/colored/', '/white/');
+                      });
+                    }, 400);
+                  }
+                }
+              }, i * 350);
+            });
+
+            careerObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.2 });
+      const careerSection = document.getElementById('career-skills');
+      if (careerSection) careerObserver.observe(careerSection);
+
+      // --- Manual hover still works on Career items ---
       timelineItems.forEach(item => {
         item.addEventListener('mouseenter', () => {
           const targetId = item.getAttribute('data-target');
           if (targetId) {
             const targetTool = document.getElementById(targetId);
-            
-            // Dim all explicitly
             toolIcons.forEach(icon => {
-              if (icon !== targetTool) {
-                icon.classList.add('dimmed');
-              }
+              if (icon !== targetTool) icon.classList.add('dimmed');
             });
-
-            // Highlight and swap the target icon
             if (targetTool) {
               targetTool.classList.add('highlighted');
-              // Swap image source from white/ to colored/
-              const currentSrc = targetTool.src;
-              targetTool.src = currentSrc.replace('/white/', '/colored/');
+              targetTool.src = targetTool.src.replace('/white/', '/colored/');
             }
           }
         });
@@ -294,21 +355,51 @@
           const targetId = item.getAttribute('data-target');
           if (targetId) {
             const targetTool = document.getElementById(targetId);
-            
-            // Revert all
-            toolIcons.forEach(icon => {
-              icon.classList.remove('dimmed');
-            });
-
-            // Remove highlighted state and revert src
+            toolIcons.forEach(icon => icon.classList.remove('dimmed'));
             if (targetTool) {
               targetTool.classList.remove('highlighted');
-              const currentSrc = targetTool.src;
-              targetTool.src = currentSrc.replace('/colored/', '/white/');
+              targetTool.src = targetTool.src.replace('/colored/', '/white/');
             }
           }
         });
       });
+
+      // --- 4. Work Section: polaroid swap only in center 50% zone ---
+      const workSection = document.getElementById('work');
+      const polaroidsDefault = document.getElementById('polaroids-default');
+      const polaroidsHover = document.getElementById('polaroids-hover');
+      const workTitle = workSection?.querySelector('.section-title');
+      let isHoverActive = false;
+
+      if (workSection) {
+        workSection.addEventListener('mousemove', (e) => {
+          const rect = workSection.getBoundingClientRect();
+          const pct = (e.clientX - rect.left) / rect.width;
+
+          if (pct >= 0.25 && pct <= 0.75) {
+            if (!isHoverActive) {
+              isHoverActive = true;
+              polaroidsDefault.style.opacity = '0';
+              polaroidsHover.style.opacity = '1';
+              if (workTitle) workTitle.style.opacity = '1';
+            }
+          } else {
+            if (isHoverActive) {
+              isHoverActive = false;
+              polaroidsDefault.style.opacity = '1';
+              polaroidsHover.style.opacity = '0';
+              if (workTitle) workTitle.style.opacity = '0';
+            }
+          }
+        });
+
+        workSection.addEventListener('mouseleave', () => {
+          isHoverActive = false;
+          polaroidsDefault.style.opacity = '1';
+          polaroidsHover.style.opacity = '0';
+          if (workTitle) workTitle.style.opacity = '0';
+        });
+      }
     </script>
   </body>
 </html>

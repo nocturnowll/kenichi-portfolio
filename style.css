@@ -201,30 +201,48 @@
    ========================================================================== */
 .about-section {
   position: relative;
-}
-
-.about-background {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 1;
   overflow: hidden;
 }
 
-.bg-park {
+/* Two stacked full-bleed images */
+.about-img {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.4; /* darken background for text readability */
-  filter: saturate(0.8);
+  transition: opacity 1.2s ease;
+}
+
+/* Default image: visible from start */
+.about-img-default {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Delayed image: hidden until .about-revealed is added by JS */
+.about-img-delayed {
+  opacity: 0;
+  z-index: 2;
+}
+
+@keyframes aboutDefaultFade {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes aboutDelayedFade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 .about-container {
   position: relative;
   z-index: 5;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 4rem;
+  height: 100%;
 }
 
 .halo {
@@ -249,51 +267,6 @@
   font-weight: 300;
   max-width: 80%;
   line-height: 1.6;
-}
-
-.about-visuals {
-  position: relative;
-  height: 80vh;
-}
-
-.vertical-text {
-  font-family: var(--font-display);
-  font-size: 15rem;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  color: rgba(242, 237, 228, 0.9);
-  position: absolute;
-  right: -50px;
-  top: 0;
-  z-index: 2;
-  line-height: 0.8;
-}
-
-.headshot {
-  position: absolute;
-  top: 50%;
-  left: 20%;
-  transform: translateY(-50%);
-  width: auto;
-  height: 80%;
-  object-fit: contain;
-  z-index: 3;
-}
-
-.anime-character {
-  position: absolute;
-  bottom: 10%;
-  left: 5%;
-  width: 250px;
-  z-index: 4;
-}
-
-.mu-logo {
-  position: absolute;
-  top: 20%;
-  right: 20%;
-  width: 100px;
-  z-index: 4;
 }
 
 /* ==========================================================================
@@ -458,78 +431,35 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 5;
+  z-index: 10;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.4s ease;
   pointer-events: none;
   text-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+  white-space: nowrap;
 }
 
-.work-section:hover .section-title {
-  opacity: 1;
-}
-
-.collage-container {
+/* Full-cover pre-made polaroid images — no CSS borders */
+.polaroids-full {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.polaroid {
-  position: absolute;
-  background: white;
-  padding: 10px 10px 40px 10px;
-  box-shadow: var(--shadow-heavy);
-  border-radius: 2px;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0s;
-}
-
-.polaroid img {
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
-.polaroid:hover {
-  transform: scale(1.15) rotate(0deg) !important;
-  z-index: 100 !important;
-  cursor: pointer;
-  box-shadow: 0px 20px 40px rgba(0,0,0,0.5);
+/* Default state: polaroids.png visible */
+#polaroids-default {
+  opacity: 1;
+  z-index: 2;
 }
 
-/* Scattering the polaroids - strict mapping to Figma layers */
-/* Bottom Layer (z-index 10) */
-.p1 { top: 10%; left: 10%; width: 300px; transform: rotate(-10deg); z-index: 10; } /* Riftstorm */
-.p4 { bottom: 15%; left: 10%; width: 280px; transform: rotate(8deg); z-index: 10; } /* Blue bg */
-.p8 { bottom: 10%; right: 10%; width: 320px; transform: rotate(12deg); z-index: 10; } /* Dimple Mockup */
-
-/* Middle Layer (z-index 20) */
-.p3 { top: 20%; left: 35%; width: 280px; transform: rotate(0deg); z-index: 20; } /* Certificate */
-.p5 { top: 40%; left: 25%; width: 350px; transform: rotate(-12deg); z-index: 20; } /* Center hall */
-.p6 { top: 30%; right: 25%; width: 300px; transform: rotate(0deg); z-index: 20; } /* Fugo Hotels */
-
-/* Top Layer (z-index 30) */
-.p2 { top: 5%; right: 15%; width: 250px; transform: rotate(15deg); z-index: 30; } /* Portrait */
-.p7 { bottom: 10%; right: 35%; width: 280px; transform: rotate(-15deg); z-index: 30; } /* White shirts */
-
-/* Sweep Interaction */
-.work-section:hover .p1,
-.work-section:hover .p3,
-.work-section:hover .p4,
-.work-section:hover .p5 {
-  left: -15% !important;
-  transform: rotate(-5deg) scale(0.9) !important;
-}
-
-.work-section:hover .p2,
-.work-section:hover .p6,
-.work-section:hover .p7,
-.work-section:hover .p8 {
-  right: -15% !important;
-  left: auto !important;
-  transform: rotate(5deg) scale(0.9) !important;
+/* Hover state: polaroids-hover.png hidden until JS triggers */
+.polaroids-hover-state {
+  opacity: 0;
+  z-index: 3;
 }
 
 /* ==========================================================================
@@ -593,28 +523,53 @@
 }
 
 /* ==========================================================================
-   Animation Load Sequences
+   Scroll-Triggered Animations (classes added by IntersectionObserver in JS)
    ========================================================================== */
 @keyframes fadeSlideUp {
-  0% { opacity: 0; transform: translateY(30px); }
+  0%   { opacity: 0; transform: translateY(30px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero delays */
-.hero-header { animation: fadeSlideUp 0.8s ease forwards 2s; opacity: 0; }
-.hero-content { animation: fadeSlideUp 0.8s ease forwards 2.5s; opacity: 0; }
+/* --- Hero --- */
+.hero-header,
+.hero-content {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.hero-header.visible { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+.hero-content.visible { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
 
-/* About delays */
-.about-content, .about-visuals { animation: fadeSlideUp 0.8s ease forwards 4s; opacity: 0; }
+/* --- About --- */
+.about-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.about-content.visible { opacity: 1; transform: translateY(0); }
 
-/* Career & Skills delays */
-.cs-title { animation: fadeSlideUp 0.8s ease forwards 7.8s; opacity: 0; }
-.skills-column { animation: fadeSlideUp 0.8s ease forwards 8s; opacity: 0; }
+/* About image crossfade: triggered by .about-revealed class on the section */
+.about-section.about-revealed .about-img-default {
+  animation: aboutDefaultFade 1.2s ease forwards;
+}
+.about-section.about-revealed .about-img-delayed {
+  animation: aboutDelayedFade 1.2s ease forwards;
+}
 
-.timeline-item:nth-child(1) { animation: fadeSlideUp 0.6s ease forwards 8s; opacity: 0; }
-.timeline-item:nth-child(2) { animation: fadeSlideUp 0.6s ease forwards 8.2s; opacity: 0; }
-.timeline-item:nth-child(3) { animation: fadeSlideUp 0.6s ease forwards 8.4s; opacity: 0; }
-.timeline-item:nth-child(4) { animation: fadeSlideUp 0.6s ease forwards 8.6s; opacity: 0; }
-.timeline-item:nth-child(5) { animation: fadeSlideUp 0.6s ease forwards 8.8s; opacity: 0; }
-.timeline-item:nth-child(6) { animation: fadeSlideUp 0.6s ease forwards 9.0s; opacity: 0; }
-.timeline-item:nth-child(7) { animation: fadeSlideUp 0.6s ease forwards 9.2s; opacity: 0; }
+/* --- Career timeline items --- */
+.timeline-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.timeline-item.visible { opacity: 1; transform: translateY(0); }
+
+/* --- Career/Skills title + skills column --- */
+.cs-title,
+.skills-column {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.cs-title.visible { opacity: 1; transform: translateY(0); }
+.skills-column.visible { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
