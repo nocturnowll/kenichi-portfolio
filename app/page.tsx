@@ -7,13 +7,13 @@ import { Connect } from '@/components/sections/Connect'
 
 export default function HomePage() {
   return (
-    <main>
+    <div className="snap-container">
       <Hero />
       <About />
       <GrowthStory />
       <OperatorStory />
       <TheEngine />
       <Connect />
-    </main>
+    </div>
   )
 }

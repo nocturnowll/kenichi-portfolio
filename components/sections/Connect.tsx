@@ -1,96 +1,78 @@
 'use client'
 import { motion } from 'framer-motion'
 
+const inV = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.65, delay },
+})
+
 export function Connect() {
   return (
-    <section id="connect" style={{ padding: '96px 48px 80px' }}>
-      <div style={{ maxWidth: '1200px' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <p style={{
-            fontFamily: 'var(--font-body)', fontSize: '12px',
-            fontWeight: 600, letterSpacing: '0.14em',
-            textTransform: 'uppercase', color: 'var(--color-accent)',
-            marginBottom: '24px',
-          }}>Connect</p>
+    <section className="snap-section" id="connect" style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '100px 48px', textAlign: 'center',
+    }}>
+      {/* Center glow */}
+      <div aria-hidden style={{
+        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        width: '60vw', height: '60vw', borderRadius: '50%',
+        background: 'radial-gradient(ellipse, oklch(60% 0.155 42 / 0.12), transparent 70%)',
+        pointerEvents: 'none',
+      }} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'end' }}>
-            <div>
-              <h2 style={{
-                fontFamily: 'var(--font-display)', fontWeight: 800,
-                fontSize: 'clamp(32px, 4vw, 60px)', letterSpacing: '-0.04em',
-                color: 'var(--color-text)', lineHeight: 1.0,
-                marginBottom: '32px',
-              }}>
-                Looking for a Growth Lead or Founding GTM hire?
-              </h2>
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                <a href="mailto:kenichiedbert@gmail.com" style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  padding: '14px 28px', borderRadius: '8px',
-                  backgroundColor: 'var(--color-accent)', color: 'white',
-                  fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '15px',
-                  textDecoration: 'none',
-                }}>
-                  Email Kenny
-                </a>
-                <a href="https://linkedin.com/in/kenichiedberty" target="_blank" rel="noopener noreferrer" style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  padding: '14px 28px', borderRadius: '8px',
-                  border: '1.5px solid var(--color-border)',
-                  color: 'var(--color-text)',
-                  fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '15px',
-                  textDecoration: 'none',
-                }}>
-                  LinkedIn
-                </a>
-              </div>
-            </div>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: '900px' }}>
+        <motion.p {...inV(0)} style={{
+          fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 600,
+          letterSpacing: '0.16em', textTransform: 'uppercase',
+          color: 'var(--color-accent)', marginBottom: '32px',
+        }}>Connect</motion.p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {[
-                ['Location', 'Samarinda, Indonesia (WIB, UTC+8)'],
-                ['Availability', 'Remote-only · async-first'],
-                ['Floor', '$5,000/month USD'],
-                ['Targets', 'Growth Lead · Founding Growth · Head of Growth'],
-                ['Stage', 'Seed to Series B preferred'],
-              ].map(([label, value]) => (
-                <div key={label} style={{
-                  display: 'flex', gap: '24px', alignItems: 'baseline',
-                  paddingBottom: '16px', borderBottom: '1px solid var(--color-border)',
-                }}>
-                  <span style={{
-                    fontFamily: 'var(--font-body)', fontSize: '12px',
-                    fontWeight: 600, color: 'var(--color-muted)',
-                    minWidth: '100px', letterSpacing: '0.02em',
-                  }}>{label}</span>
-                  <span style={{
-                    fontFamily: 'var(--font-body)', fontSize: '14px',
-                    color: 'var(--color-text)',
-                  }}>{value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div style={{ overflow: 'hidden', marginBottom: '40px' }}>
+          <motion.h2
+            initial={{ y: '100%' }} whileInView={{ y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.85, ease: "easeOut" }}
+            style={{
+              fontFamily: 'var(--font-display)', fontWeight: 800,
+              fontSize: 'clamp(36px, 5.5vw, 80px)', lineHeight: 0.95,
+              letterSpacing: '-0.04em', color: 'var(--color-text)',
+            }}
+          >
+            Looking for a Growth Lead or Founding GTM hire?
+          </motion.h2>
+        </div>
+
+        <motion.p {...inV(0.2)} style={{
+          fontFamily: 'var(--font-body)', fontSize: '16px', lineHeight: 1.65,
+          color: 'var(--color-muted)', marginBottom: '48px',
+        }}>
+          Based in Samarinda, Indonesia. Remote-only. Async-first. $5,000/month USD floor.
+          Targeting Seed to Series B startups.
+        </motion.p>
+
+        <motion.div {...inV(0.3)} style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '80px' }}>
+          <a href="mailto:kenichiedbert@gmail.com" style={{
+            padding: '16px 36px', borderRadius: '40px',
+            backgroundColor: 'var(--color-accent)', color: 'white',
+            fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '15px', textDecoration: 'none',
+          }}>Email Kenny</a>
+          <a href="https://linkedin.com/in/kenichiedberty" target="_blank" rel="noopener noreferrer" style={{
+            padding: '16px 36px', borderRadius: '40px',
+            border: '1px solid var(--color-border)', color: 'var(--color-text)',
+            fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '15px', textDecoration: 'none',
+          }}>LinkedIn</a>
         </motion.div>
 
-        <div style={{
-          marginTop: '80px', paddingTop: '32px',
-          borderTop: '1px solid var(--color-border)',
+        <motion.div {...inV(0.4)} style={{
+          paddingTop: '40px', borderTop: '1px solid var(--color-border)',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         }}>
-          <span style={{
-            fontFamily: 'var(--font-display)', fontWeight: 800,
-            fontSize: '20px', letterSpacing: '-0.03em', color: 'var(--color-text)',
-          }}>KE<span style={{ color: 'var(--color-accent)' }}>/</span>Y</span>
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'var(--color-muted)' }}>
-            Kenichi Edbert Yauwanta · 2026
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '20px', letterSpacing: '-0.03em', color: 'var(--color-text)' }}>
+            KE<span style={{ color: 'var(--color-accent)' }}>/</span>Y
           </span>
-        </div>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'var(--color-muted)' }}>Kenichi Edbert Yauwanta · 2026</span>
+        </motion.div>
       </div>
     </section>
   )

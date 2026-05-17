@@ -2,46 +2,62 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Light warm cream palette — committed amber accent */
-  --color-bg:           oklch(97% 0.006 55);
-  --color-surface:      oklch(92% 0.010 55);
-  --color-surface-2:    oklch(87% 0.014 55);
-  --color-text:         oklch(14% 0.008 55);
-  --color-muted:        oklch(52% 0.008 55);
-  --color-border:       oklch(83% 0.014 55);
-  --color-accent:       oklch(54% 0.155 42);
-  --color-accent-hover: oklch(48% 0.155 42);
-  --color-accent-tint:  oklch(92% 0.040 42);
-
-  /* Engine section — dark tonal break */
-  --color-engine-bg:    oklch(11% 0.006 265);
-  --color-engine-text:  oklch(75% 0.010 265);
-  --color-engine-dim:   oklch(42% 0.008 265);
-  --color-engine-border: oklch(20% 0.010 265);
-  --color-engine-green: oklch(65% 0.15 150);
-  --color-engine-amber: oklch(75% 0.15 80);
+  --color-bg:           oklch(9%  0.006 265);
+  --color-surface:      oklch(14% 0.008 265);
+  --color-surface-2:    oklch(19% 0.010 265);
+  --color-text:         oklch(93% 0.006 70);
+  --color-muted:        oklch(52% 0.008 265);
+  --color-border:       oklch(22% 0.010 265);
+  --color-accent:       oklch(64% 0.155 42);
+  --color-accent-dim:   oklch(54% 0.140 42);
+  --color-accent-glow:  oklch(60% 0.155 42 / 0.18);
 
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
   --font-body:    'Onest', system-ui, sans-serif;
-  --font-mono:    'Geist Mono', 'Courier New', monospace;
+  --font-mono:    'Geist Mono', monospace;
 
   --animate-blink: blink 1s step-end infinite;
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
 
-body {
-  background-color: var(--color-bg);
+html {
+  background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
-  font-size: 17px;
-  line-height: 1.6;
+  /* Scroll snap — desktop only */
 }
 
-::selection { background-color: var(--color-accent); color: var(--color-bg); }
+body { overflow-x: hidden; }
 
-/* Engine section override */
-.engine-section { background-color: var(--color-engine-bg); color: var(--color-engine-text); }
+/* Full-screen snap sections */
+.snap-container {
+  height: 100dvh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient glow helper */
+.glow-bg::before {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, var(--color-accent-glow), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+::selection { background: var(--color-accent); color: var(--color-bg); }
