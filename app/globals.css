@@ -1,0 +1,41 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@theme inline {
+  --color-brand-bg: #111111;
+  --color-brand-surface: #1a1a1a;
+  --color-brand-orange: #E85D26;
+  --color-brand-orange-muted: #c44d1e;
+  --color-brand-engine: #0d1117;
+  --color-brand-engine-border: #1e2d3d;
+  --color-brand-text: #f0ece6;
+  --color-brand-muted: #888888;
+  --color-engine-text: #a6b3c5;
+  --color-engine-dim: #4d5a6e;
+
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --animate-blink: blink 1s step-end infinite;
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-brand-orange);
+  color: var(--color-brand-bg);
+}
