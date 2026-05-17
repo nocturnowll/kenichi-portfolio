@@ -1,57 +1,108 @@
 'use client'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { Button } from '@/components/ui/Button'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '/kenichi-portfolio'
 
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay },
+})
+
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 px-6 md:px-12 overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={`${BASE}/photos/hero.png`}
-          alt="Kenichi Yauwanta"
-          fill
-          className="object-cover object-top opacity-25"
-          priority
-        />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, var(--color-brand-bg) 40%, var(--color-brand-bg)/70 70%, transparent)' }} />
-      </div>
+    <section style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      padding: '120px 48px 72px',
+      borderBottom: '1px solid var(--color-border)',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      {/* Background accent mark */}
+      <div aria-hidden style={{
+        position: 'absolute', top: 64, right: 48,
+        fontFamily: 'var(--font-display)', fontWeight: 800,
+        fontSize: 'clamp(180px, 25vw, 320px)',
+        lineHeight: 1,
+        color: 'var(--color-accent-tint)',
+        letterSpacing: '-0.06em',
+        userSelect: 'none',
+        zIndex: 0,
+      }}>72h</div>
 
-      <div className="relative z-10 max-w-3xl">
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <p style={{ fontFamily: 'var(--font-display)', color: 'var(--color-brand-text)', lineHeight: '0.95' }} className="text-5xl md:text-7xl lg:text-8xl mb-6">
-            110,000 users.<br />
-            130 countries.<br />
-            <span style={{ color: 'var(--color-brand-orange)' }}>72 hours.</span>
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <motion.div {...fadeUp(0)}>
+          <p style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: '13px',
+            fontWeight: 600,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'var(--color-accent)',
+            marginBottom: '28px',
+          }}>
+            Growth Operator — Indonesia — Open to Remote Roles
           </p>
         </motion.div>
 
-        <motion.p
-          style={{ fontFamily: 'var(--font-display)', color: 'var(--color-brand-muted)' }}
-          className="text-xl md:text-2xl italic mb-4"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          Community and partnerships. The two things that made it happen.
+        <motion.h1 {...fadeUp(0.1)} style={{
+          fontFamily: 'var(--font-display)',
+          fontWeight: 800,
+          fontSize: 'clamp(48px, 8vw, 110px)',
+          lineHeight: 0.95,
+          letterSpacing: '-0.04em',
+          color: 'var(--color-text)',
+          marginBottom: '40px',
+          maxWidth: '900px',
+        }}>
+          Kenichi<br />Edbert<br />Yauwanta
+        </motion.h1>
+
+        <motion.p {...fadeUp(0.2)} style={{
+          fontFamily: 'var(--font-body)',
+          fontSize: 'clamp(18px, 2.2vw, 26px)',
+          lineHeight: 1.5,
+          color: 'var(--color-muted)',
+          maxWidth: '620px',
+          marginBottom: '48px',
+        }}>
+          Built the community and partnerships that drove 110,000+ people
+          across 130 countries in 72 hours. Contributed to a $6.5M raise.
+          Now operating a Pilates franchise at Rp&nbsp;120M/month — and building
+          the AI systems that run it.
         </motion.p>
 
-        <motion.p
-          style={{ color: 'var(--color-brand-muted)' }}
-          className="text-sm mb-10 tracking-wide"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          Kenichi Yauwanta · Growth operator & builder · Open to remote roles globally
-        </motion.p>
-
-        <motion.div
-          className="flex flex-wrap gap-4"
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }}
-        >
-          <Button href="#career" variant="primary">See my work ↓</Button>
-          <Button href={`${BASE}/resume/kenichi-yauwanta-growth-resume.pdf`} variant="ghost" download>
+        <motion.div {...fadeUp(0.3)} style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+          <a href="#career" style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            padding: '14px 28px',
+            backgroundColor: 'var(--color-accent)',
+            color: 'white',
+            fontFamily: 'var(--font-body)',
+            fontWeight: 600,
+            fontSize: '15px',
+            textDecoration: 'none',
+            borderRadius: '8px',
+          }}>
+            See the work ↓
+          </a>
+          <a href={`${BASE}/resume/kenichi-yauwanta-growth-resume.pdf`} download style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            padding: '14px 28px',
+            border: '1.5px solid var(--color-border)',
+            color: 'var(--color-text)',
+            fontFamily: 'var(--font-body)',
+            fontWeight: 600,
+            fontSize: '15px',
+            textDecoration: 'none',
+            borderRadius: '8px',
+            backgroundColor: 'transparent',
+          }}>
             Download resume
-          </Button>
+          </a>
         </motion.div>
       </div>
     </section>
