@@ -3,19 +3,16 @@
 import { useEffect, useRef, useState } from 'react'
 
 const SECTIONS = [
-  { id: '',           num: '00', label: 'Hero' },
-  { id: 'about',      num: '01', label: 'halo!' },
-  { id: 'curious',    num: '02', label: 'Curious' },
-  { id: 'career',     num: '03', label: 'Community' },
-  { id: 'the-work',   num: '04', label: 'Builder' },
-  { id: 'the-engine', num: '05', label: 'Engine' },
-  { id: 'tools',      num: '06', label: 'Tools' },
-  { id: 'connect',    num: '07', label: 'Connect' },
+  { id: '',            label: 'Intro' },
+  { id: 'community',   label: 'Community' },
+  { id: 'numbers',     label: 'Numbers' },
+  { id: 'the-work',    label: 'Builder' },
+  { id: 'the-engine',  label: 'Engine' },
+  { id: 'connect',     label: 'Connect' },
 ]
 
 export function RailNav() {
   const [activeId, setActiveId] = useState<string>('')
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
@@ -37,9 +34,7 @@ export function RailNav() {
           }
         })
 
-        if (bestRatio > 0) {
-          setActiveId(bestId)
-        }
+        if (bestRatio > 0) setActiveId(bestId)
       },
       { threshold: [0, 0.25, 0.5, 0.75, 1] }
     )
@@ -62,19 +57,12 @@ export function RailNav() {
       }
     }
 
-    return () => {
-      observer.disconnect()
-    }
+    return () => observer.disconnect()
   }, [])
 
   function handleClick(id: string) {
     if (id === '') {
-      const container = document.querySelector('.snap-container')
-      if (container) {
-        container.scrollTo({ top: 0, behavior: 'smooth' })
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
+      document.querySelector('.snap-container')?.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
     }
@@ -82,90 +70,60 @@ export function RailNav() {
 
   return (
     <nav
+      aria-label="Page sections"
       style={{
         position: 'fixed',
-        left: '32px',
+        right: '28px',
         top: '50%',
         transform: 'translateY(-50%)',
         zIndex: 60,
         display: 'flex',
         flexDirection: 'column',
-        gap: '14px',
+        gap: '18px',
+        alignItems: 'flex-end',
       }}
-      aria-label="Page sections"
     >
       {SECTIONS.map((section) => {
         const isActive = activeId === section.id
-        const isHovered = hoveredId === section.id
-
-        const barWidth = isActive ? '36px' : isHovered ? '18px' : '16px'
-        const barColor = isActive
-          ? 'var(--color-accent)'
-          : isHovered
-          ? 'var(--color-text)'
-          : 'var(--color-muted)'
-
-        const textColor = isActive
-          ? 'var(--color-accent)'
-          : isHovered
-          ? 'var(--color-text)'
-          : 'var(--color-muted)'
+        const key = section.id === '' ? 'hero' : section.id
 
         return (
-          <div
-            key={section.id === '' ? 'hero' : section.id}
+          <button
+            key={key}
             onClick={() => handleClick(section.id)}
-            onMouseEnter={() => setHoveredId(section.id)}
-            onMouseLeave={() => setHoveredId(null)}
+            aria-label={`Go to ${section.label}`}
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
+              gap: '8px',
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
-            }}
-            aria-label={`Go to ${section.label}`}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                handleClick(section.id)
-              }
+              padding: 0,
             }}
           >
-            <div
-              style={{
-                width: barWidth,
-                height: '1px',
-                background: barColor,
-                transition: 'width 0.3s ease, background 0.3s ease',
-                flexShrink: 0,
-              }}
-            />
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '10px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: textColor,
-                transition: 'opacity 0.2s ease, color 0.3s ease',
-                whiteSpace: 'nowrap',
-                userSelect: 'none',
-              }}
-            >
-              {section.num}
-              <span
-                style={{
-                  opacity: isActive ? 1 : 0,
-                  transition: 'opacity 0.2s ease',
-                  pointerEvents: 'none',
-                }}
-              >
-                {' · '}{section.label}
-              </span>
+            <span style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '9px',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: isActive ? 'var(--color-accent)' : 'var(--color-muted)',
+              opacity: isActive ? 1 : 0,
+              transition: 'opacity 0.25s ease, color 0.25s ease',
+              whiteSpace: 'nowrap',
+              userSelect: 'none',
+            }}>
+              {section.label}
             </span>
-          </div>
+            <div style={{
+              width: isActive ? '28px' : '12px',
+              height: '1.5px',
+              backgroundColor: isActive ? 'var(--color-accent)' : 'oklch(35% 0.008 265)',
+              borderRadius: '2px',
+              transition: 'width 0.3s ease, background-color 0.3s ease',
+              flexShrink: 0,
+            }} />
+          </button>
         )
       })}
     </nav>

@@ -1,85 +1,241 @@
 'use client'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { Terminal } from '@/components/engine/Terminal'
-import { SESSION_JOB_HUNTER, SESSION_CRM } from '@/lib/terminal-sessions'
 
-const MONO = "'IBM Plex Mono','Geist Mono',monospace"
+const MONO = "'Geist Mono','IBM Plex Mono',monospace"
 
 const systems = [
-  { name: 'member-crm',     desc: 'AI inbox — WhatsApp + Instagram. Claude-backed. 384 members.', status: 'live' },
-  { name: 'booking-engine', desc: 'Class booking + payment. Replaced commercial tool.', status: 'live' },
-  { name: 'pos-system',     desc: 'F&B POS — QR ordering, loyalty, owner dashboard.', status: 'live' },
-  { name: 'ops-tracker',    desc: 'Real-time sales + production. Every transaction.', status: 'live' },
-  { name: 'job-hunter',     desc: 'Scrapes 3 boards every 8h. Scores. Telegrams. Running.', status: 'live' },
+  {
+    id: 'member-crm',
+    label: 'member-crm',
+    description: 'AI inbox handles WhatsApp + Instagram. Scores leads. Routes inquiries. Never misses a message.',
+    metric: '384 members',
+    for: 'Agape Movement',
+    stack: ['Claude', 'Supabase', 'n8n'],
+  },
+  {
+    id: 'booking-engine',
+    label: 'booking-engine',
+    description: 'Full class scheduling, payments, waitlists. Replaced a commercial tool in week one.',
+    metric: 'Rp 120M tracked',
+    for: 'Agape Movement',
+    stack: ['Next.js', 'Stripe', 'Supabase'],
+  },
+  {
+    id: 'ichiecha-pos',
+    label: 'ichiecha-pos',
+    description: 'QR ordering, loyalty tracking, owner dashboard. Every transaction logged in real time.',
+    metric: '3 channels live',
+    for: 'IchiEcha',
+    stack: ['Next.js', 'Supabase', 'Vercel'],
+  },
+  {
+    id: 'ops-tracker',
+    label: 'ops-tracker',
+    description: 'Sales + production data combined. Daily reports auto-sent to owner and partners.',
+    metric: 'Daily auto-reports',
+    for: 'IchiEcha',
+    stack: ['Supabase', 'Claude', 'Telegram'],
+  },
+  {
+    id: 'content-engine',
+    label: 'content-engine',
+    description: 'AI drafts captions and post schedules from sales data. Publishes across three channels.',
+    metric: '3× posting cadence',
+    for: 'Agape + IchiEcha',
+    stack: ['Claude', 'n8n', 'Buffer'],
+  },
 ]
 
-export function TheEngine() {
-  const [session, setSession] = useState(0)
+function PulseRing({ delay = 0 }: { delay?: number }) {
   return (
-    <section className="snap-section engine-edge" id="the-engine" style={{ display: 'flex', alignItems: 'center', padding: '100px 56px 80px', backgroundColor: '#06090F' }}>
+    <div style={{ position: 'relative', width: 10, height: 10, flexShrink: 0 }}>
+      <div style={{
+        position: 'absolute', inset: 0, borderRadius: '50%',
+        backgroundColor: 'oklch(62% 0.14 150)',
+      }} />
+      <motion.div
+        animate={{ scale: [1, 1.9], opacity: [0.6, 0] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeOut', delay }}
+        style={{
+          position: 'absolute', inset: 0, borderRadius: '50%',
+          backgroundColor: 'oklch(62% 0.14 150)',
+        }}
+      />
+    </div>
+  )
+}
 
-      {/* Matrix dots */}
+export function TheEngine() {
+  return (
+    <section
+      className="snap-section engine-edge"
+      id="the-engine"
+      style={{ display: 'flex', alignItems: 'center', padding: '80px 56px', backgroundColor: '#06090F' }}
+    >
       <div className="matrix-dots" />
 
-      {/* Gemini orb — center, behind everything */}
-      <div className="gemini-orb" style={{ width: '75vw', height: '75vw', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-
-      {/* Secondary orb — smaller, offset, creates depth */}
-      <div className="gemini-orb" style={{ width: '35vw', height: '35vw', top: '20%', right: '10%', animationDelay: '-7s', animationDuration: '10s', opacity: 0.15 }} />
+      {/* Gemini orb — center background */}
+      <div className="gemini-orb" style={{ width: '80vw', height: '80vw', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+      <div className="gemini-orb" style={{ width: '30vw', height: '30vw', top: '15%', right: '8%', animationDelay: '-7s', animationDuration: '10s', opacity: 0.12 }} />
 
       <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '1300px' }}>
+
         {/* Headline */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ marginBottom: '56px' }}>
-          <p style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'oklch(64% 0.155 42)', marginBottom: '20px' }}>05 · The Engine</p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          style={{ marginBottom: '52px' }}
+        >
+          <p style={{ fontFamily: MONO, fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'oklch(64% 0.155 42)', marginBottom: '18px' }}>
+            05 · The Engine
+          </p>
           <div style={{ overflow: 'hidden' }}>
-            <motion.h2 initial={{ y: '105%' }} whileInView={{ y: 0 }} viewport={{ once: true }} transition={{ duration: 0.85 }} style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(32px, 4.5vw, 60px)', letterSpacing: '-0.03em', lineHeight: 1.0, color: 'oklch(92% 0.006 70)' }}>
-              when tools don&apos;t fit,{' '}<span style={{ color: 'oklch(64% 0.155 42)' }}>I build them.</span>
+            <motion.h2
+              initial={{ y: '105%' }}
+              whileInView={{ y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.85 }}
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 800,
+                fontSize: 'clamp(28px, 4vw, 54px)',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
+                color: 'oklch(92% 0.006 70)',
+              }}
+            >
+              when tools don&apos;t fit,{' '}
+              <span style={{ color: 'oklch(64% 0.155 42)' }}>I build them.</span>
             </motion.h2>
           </div>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '56px' }}>
-          {/* Left — terminal */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
-              {['job-hunter', 'crm scoring'].map((label, i) => (
-                <button key={label} onClick={() => setSession(i)} style={{ fontFamily: MONO, fontSize: '12px', padding: '6px 14px', borderRadius: '6px', border: 'none', cursor: 'pointer', backgroundColor: session === i ? 'oklch(64% 0.155 42)' : 'oklch(14% 0.008 265)', color: session === i ? 'white' : 'oklch(42% 0.008 265)' }}>
-                  {label}
-                </button>
-              ))}
-            </div>
-            <Terminal session={[SESSION_JOB_HUNTER, SESSION_CRM][session]} />
-
-            {/* Stats row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1px', backgroundColor: 'oklch(16% 0.008 265)', marginTop: '20px', borderRadius: '10px', overflow: 'hidden' }}>
-              {[['5', 'systems'], ['110K+', 'users'], ['8h', 'cadence'], ['0', 'non-AI']].map(([v, l]) => (
-                <div key={l} style={{ backgroundColor: '#06090F', padding: '16px 12px' }}>
-                  <p style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '26px', letterSpacing: '-0.03em', color: 'oklch(64% 0.155 42)', marginBottom: '3px' }}>{v}</p>
-                  <p style={{ fontFamily: MONO, fontSize: '11px', color: 'oklch(38% 0.008 265)' }}>{l}</p>
+        {/* Systems grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '32px' }}>
+          {systems.map(({ id, label, description, metric, for: forClient, stack }, i) => (
+            <motion.div
+              key={id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: i * 0.08 }}
+              style={{
+                backgroundColor: 'oklch(8% 0.006 265)',
+                border: '1px solid oklch(16% 0.008 265)',
+                borderRadius: '12px',
+                padding: '24px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                /* skip the 6th cell if 5 items in 3-column grid */
+                gridColumn: i === 4 ? 'span 1' : 'auto',
+              }}
+            >
+              {/* Header row */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <PulseRing delay={i * 0.3} />
+                  <span style={{
+                    fontFamily: MONO,
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    color: 'oklch(64% 0.155 42)',
+                    letterSpacing: '0.02em',
+                  }}>{label}</span>
                 </div>
-              ))}
-            </div>
-          </motion.div>
+                <span style={{
+                  fontFamily: MONO,
+                  fontSize: '9px',
+                  padding: '3px 8px',
+                  borderRadius: '40px',
+                  backgroundColor: 'oklch(62% 0.14 150 / 0.10)',
+                  color: 'oklch(62% 0.14 150)',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                }}>live</span>
+              </div>
 
-          {/* Right — systems */}
-          <div>
-            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.08 }} style={{ fontFamily: MONO, fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'oklch(35% 0.008 265)', marginBottom: '20px' }}>
+              {/* Description */}
+              <p style={{
+                fontFamily: MONO,
+                fontSize: '11px',
+                lineHeight: 1.6,
+                color: 'oklch(42% 0.008 265)',
+                flexGrow: 1,
+              }}>{description}</p>
+
+              {/* Footer */}
+              <div style={{
+                paddingTop: '12px',
+                borderTop: '1px solid oklch(13% 0.006 265)',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-end',
+              }}>
+                <div>
+                  <p style={{ fontFamily: MONO, fontSize: '11px', color: 'oklch(55% 0.008 265)', marginBottom: '2px' }}>
+                    {forClient}
+                  </p>
+                  <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '13px', letterSpacing: '-0.02em', color: 'oklch(75% 0.006 70)' }}>
+                    {metric}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                  {stack.map((s) => (
+                    <span key={s} style={{
+                      fontFamily: MONO,
+                      fontSize: '9px',
+                      padding: '2px 6px',
+                      borderRadius: '4px',
+                      backgroundColor: 'oklch(14% 0.008 265)',
+                      color: 'oklch(38% 0.008 265)',
+                      letterSpacing: '0.06em',
+                    }}>{s}</span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+
+          {/* 6th cell — summary card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.45 }}
+            style={{
+              backgroundColor: 'oklch(64% 0.155 42 / 0.08)',
+              border: '1px solid oklch(64% 0.155 42 / 0.18)',
+              borderRadius: '12px',
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            <p style={{ fontFamily: MONO, fontSize: '11px', color: 'oklch(64% 0.155 42)', marginBottom: '12px', letterSpacing: '0.08em' }}>
               5 systems · production
-            </motion.p>
-            {systems.map(({ name, desc, status }, i) => (
-              <motion.div key={name} initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.12 + i * 0.07 }} style={{ padding: '18px 0', borderBottom: '1px solid oklch(14% 0.008 265)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-                  <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 500, color: 'oklch(64% 0.155 42)' }}>{name}</span>
-                  <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '40px', backgroundColor: 'oklch(60% 0.14 150 / 0.12)', color: 'oklch(62% 0.14 150)', fontFamily: MONO, fontWeight: 600 }}>{status}</span>
-                </div>
-                <p style={{ fontFamily: MONO, fontSize: '12px', lineHeight: 1.55, color: 'oklch(40% 0.008 265)' }}>{desc}</p>
-              </motion.div>
-            ))}
-            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.6 }} style={{ fontFamily: MONO, fontSize: '11px', color: 'oklch(22% 0.005 265)', marginTop: '20px' }}>
-              Claude · Supabase · Next.js · GitHub Actions · Vercel
-            </motion.p>
-          </div>
+            </p>
+            <div>
+              <p style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 800,
+                fontSize: 'clamp(28px, 3vw, 44px)',
+                letterSpacing: '-0.04em',
+                lineHeight: 0.95,
+                color: 'oklch(64% 0.155 42)',
+                marginBottom: '8px',
+              }}>Solo.<br />Shipped.</p>
+              <p style={{ fontFamily: MONO, fontSize: '11px', color: 'oklch(40% 0.008 265)', lineHeight: 1.5 }}>
+                Every system built alone,<br />running in production.
+              </p>
+            </div>
+            <p style={{ fontFamily: MONO, fontSize: '10px', color: 'oklch(28% 0.005 265)', marginTop: '16px' }}>
+              Claude · Supabase · Next.js · n8n
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>
