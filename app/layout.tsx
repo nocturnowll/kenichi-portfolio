@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Nav } from '@/components/Nav'
+import { RailNav } from '@/components/RailNav'
 
 export const metadata: Metadata = {
   title: 'Kenichi Yauwanta — Growth Operator & Builder',
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)', fontFamily: 'var(--font-body)', overflow: 'hidden' }}>
+        <RailNav />
         <Nav />
         {children}
       </body>
