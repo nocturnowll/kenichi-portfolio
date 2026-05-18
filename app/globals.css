@@ -6,24 +6,41 @@
   --color-surface:      oklch(14% 0.008 265);
   --color-surface-2:    oklch(19% 0.010 265);
   --color-text:         oklch(93% 0.006 70);
-  --color-muted:        oklch(52% 0.008 265);
-  --color-border:       oklch(22% 0.010 265);
+  --color-muted:        oklch(48% 0.008 265);
+  --color-border:       oklch(20% 0.010 265);
   --color-accent:       oklch(64% 0.155 42);
   --color-accent-dim:   oklch(54% 0.140 42);
   --color-accent-glow:  oklch(60% 0.155 42 / 0.18);
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
   --font-body:    'Onest', system-ui, sans-serif;
   --font-mono:    'Geist Mono', monospace;
-  --animate-blink: blink 1s step-end infinite;
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart:   cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html { cursor: none; }
+  a, button { cursor: none; }
+}
+
 body { overflow-x: hidden; }
 
-.snap-container { height: 100dvh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
-.snap-section { scroll-snap-align: start; scroll-snap-stop: always; min-height: 100dvh; position: relative; overflow: hidden; }
+/* Natural-scroll sections — no snap */
+.portfolio-section {
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
 
 /* Gemini orb — rotating conic gradient */
 @keyframes orbSpin {
@@ -35,6 +52,12 @@ body { overflow-x: hidden; }
   0%,100% { opacity: 0.28; }
   50%      { opacity: 0.42; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes orbSpin  { from { transform: rotate(0deg); } to { transform: rotate(0deg); } }
+  @keyframes orbPulse { 0%,100% { opacity: 0.30; } }
+}
+
 .gemini-orb {
   position: absolute;
   border-radius: 50%;
@@ -55,13 +78,13 @@ body { overflow-x: hidden; }
 .matrix-dots {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
   background-size: 24px 24px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Section edge beam — Gemini screen-edge style */
+/* Engine section edge beams */
 .engine-edge::before {
   content: '';
   position: absolute;

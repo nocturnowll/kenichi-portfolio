@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Nav } from '@/components/Nav'
-import { RailNav } from '@/components/RailNav'
+import { RailNav }      from '@/components/RailNav'
+import { CustomCursor } from '@/components/ui/CustomCursor'
 
 export const metadata: Metadata = {
-  title: 'Kenichi Yauwanta — Growth Operator & Builder',
-  description: '110,000 users. 130 countries. 72 hours. Community and partnerships. Growth operator based in Indonesia, open to remote roles.',
+  title: 'Kenichi Yauwanta — Marketing by trade. Systems by obsession.',
+  description: '110,000 users. 130 countries. 72 hours. Growth operator and builder based in Indonesia, open to remote roles.',
   openGraph: {
     title: 'KE/Y — Kenichi Yauwanta',
-    description: 'Growth operator & builder. Open to remote roles globally.',
+    description: 'Marketing by trade. Systems by obsession.',
     type: 'website',
   },
 }
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)', fontFamily: 'var(--font-body)', overflow: 'hidden' }}>
+      <body style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)', fontFamily: 'var(--font-body)' }}>
+        <CustomCursor />
         <RailNav />
-        <Nav />
         {children}
       </body>
     </html>

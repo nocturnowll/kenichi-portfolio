@@ -5,183 +5,174 @@ import Image from 'next/image'
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '/kenichi-portfolio'
 
 const logos = [
-  { src: `${BASE}/photos/companies/confiction.png`, alt: 'Confiction Labs' },
-  { src: `${BASE}/photos/companies/bigmall.png`,    alt: 'BIG Mall' },
-  { src: `${BASE}/photos/companies/contentmogul.png`, alt: 'Content Mogul' },
-  { src: `${BASE}/photos/companies/fugo.png`,       alt: 'FUGO Hotels' },
+  { src: `${BASE}/photos/companies/confiction.png`,    alt: 'Confiction Labs' },
+  { src: `${BASE}/photos/companies/bigmall.png`,       alt: 'BIG Mall' },
+  { src: `${BASE}/photos/companies/contentmogul.png`,  alt: 'Content Mogul' },
+  { src: `${BASE}/photos/companies/fugo.png`,          alt: 'FUGO Hotels' },
 ]
 
 export function Community() {
   return (
     <section
-      className="snap-section"
+      className="portfolio-section"
       id="community"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: '80px 56px 52px',
-        backgroundColor: '#080B12',
-      }}
+      style={{ backgroundColor: '#080B12', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
     >
-      {/* Polaroids — dominant right visual */}
-      <div style={{
-        position: 'absolute', right: '-3%', top: '5%',
-        width: '58%', height: '90%', zIndex: 0,
-      }}>
+      {/* Polaroids — true full-bleed background */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         <Image
           src={`${BASE}/photos/polaroids.png`}
           alt="Community moments"
           fill
-          style={{ objectFit: 'contain', objectPosition: 'right center' }}
+          style={{ objectFit: 'cover', objectPosition: 'center top' }}
         />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #080B12 0%, transparent 25%, transparent 72%, #080B12 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #080B12 0%, transparent 12%, transparent 72%, #080B12 100%)' }} />
+        {/* Atmospheric overlays */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, rgba(8,11,18,0.15) 0%, rgba(8,11,18,0.55) 50%, rgba(8,11,18,0.97) 85%, #080B12 100%)',
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to right, rgba(8,11,18,0.65) 0%, transparent 55%)',
+        }} />
       </div>
 
-      {/* Left — the story */}
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '480px' }}>
+      {/* Content — floats over the photo */}
+      <div style={{ position: 'relative', zIndex: 1, padding: '80px 64px 60px' }}>
 
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
           style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '11px', fontWeight: 600,
-            letterSpacing: '0.18em', textTransform: 'uppercase',
-            color: 'var(--color-accent)', marginBottom: '24px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '11px', letterSpacing: '0.18em',
+            textTransform: 'uppercase',
+            color: 'var(--color-muted)', marginBottom: '28px',
+            opacity: 0.7,
           }}
         >
-          Confiction Labs · 2022–2025
+          Confiction Labs · 2022 – 2025
         </motion.p>
 
         {/* Headline */}
-        <div style={{ overflow: 'hidden', marginBottom: '6px' }}>
+        <div style={{ overflow: 'hidden', marginBottom: '2px' }}>
           <motion.h2
             initial={{ y: '105%' }}
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.85 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
             style={{
               fontFamily: 'var(--font-display)', fontWeight: 800,
-              fontSize: 'clamp(32px, 4.5vw, 60px)',
-              letterSpacing: '-0.04em', lineHeight: 0.95,
+              fontSize: 'clamp(38px, 5.5vw, 80px)',
+              letterSpacing: '-0.04em', lineHeight: 0.92,
               color: 'var(--color-text)',
             }}
           >
             The Community
           </motion.h2>
         </div>
-        <div style={{ overflow: 'hidden', marginBottom: '32px' }}>
+        <div style={{ overflow: 'hidden', marginBottom: '48px' }}>
           <motion.h2
             initial={{ y: '105%' }}
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.85, delay: 0.06 }}
+            transition={{ duration: 0.9, delay: 0.07, ease: 'easeOut' }}
             style={{
               fontFamily: 'var(--font-display)', fontWeight: 800,
-              fontSize: 'clamp(32px, 4.5vw, 60px)',
-              letterSpacing: '-0.04em', lineHeight: 0.95,
-              color: 'var(--color-accent)',
+              fontSize: 'clamp(38px, 5.5vw, 80px)',
+              letterSpacing: '-0.04em', lineHeight: 0.92,
+              color: 'var(--color-text)',
             }}
           >
             Architect.
           </motion.h2>
         </div>
 
-        {/* The hero stat — proof */}
+        {/* The proof */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.18 }}
-          style={{ marginBottom: '28px' }}
+          transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
+          style={{ marginBottom: '48px' }}
         >
           <p style={{
             fontFamily: 'var(--font-display)', fontWeight: 800,
-            fontSize: 'clamp(40px, 5.5vw, 76px)',
-            letterSpacing: '-0.04em', lineHeight: 0.9,
-            color: 'var(--color-text)', marginBottom: '6px',
+            fontSize: 'clamp(44px, 6.5vw, 96px)',
+            letterSpacing: '-0.04em', lineHeight: 0.88,
+            color: 'var(--color-accent)',
+            marginBottom: '10px',
           }}>
             110,590
           </p>
           <p style={{
-            fontFamily: 'var(--font-body)', fontSize: '14px',
-            color: 'var(--color-muted)', lineHeight: 1.5,
+            fontFamily: 'var(--font-body)', fontSize: '15px',
+            color: 'var(--color-muted)', letterSpacing: '-0.01em',
           }}>
-            downloads in 72 hours — 130 countries — Steam #1
+            downloads — 72 hours — 130 countries — Steam #1
           </p>
         </motion.div>
 
-        {/* Supporting stats */}
+        {/* Supporting stats strip */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.28 }}
+          transition={{ duration: 0.6, delay: 0.28 }}
           style={{
             display: 'flex', gap: '0',
-            borderTop: '1px solid var(--color-border)',
-            paddingTop: '20px',
+            borderTop: '1px solid oklch(25% 0.008 265 / 0.6)',
+            paddingTop: '24px', marginBottom: '36px',
+            maxWidth: '520px',
           }}
         >
           {[
             { n: '15K+',  l: 'Discord members' },
-            { n: '$6.5M', l: 'fundraise' },
+            { n: '$6.5M', l: 'fundraise supported' },
             { n: '67%',   l: 'D1 retention' },
           ].map(({ n, l }, i) => (
-            <div
-              key={l}
-              style={{
-                flex: 1,
-                paddingRight: i < 2 ? '20px' : 0,
-                borderRight: i < 2 ? '1px solid var(--color-border)' : 'none',
-                paddingLeft: i > 0 ? '20px' : 0,
-              }}
-            >
+            <div key={l} style={{
+              flex: 1,
+              paddingRight: i < 2 ? '24px' : 0,
+              borderRight: i < 2 ? '1px solid oklch(22% 0.008 265 / 0.5)' : 'none',
+              paddingLeft: i > 0 ? '24px' : 0,
+            }}>
               <p style={{
                 fontFamily: 'var(--font-display)', fontWeight: 800,
-                fontSize: 'clamp(18px, 2vw, 26px)',
+                fontSize: 'clamp(20px, 2.2vw, 30px)',
                 letterSpacing: '-0.03em', color: 'var(--color-text)',
                 marginBottom: '3px',
               }}>{n}</p>
               <p style={{
                 fontFamily: 'var(--font-body)', fontSize: '11px',
-                color: 'var(--color-muted)', lineHeight: 1.4,
+                color: 'var(--color-muted)',
               }}>{l}</p>
             </div>
           ))}
         </motion.div>
-      </div>
 
-      {/* Company logos — bottom */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.15 }}
-        style={{
-          position: 'relative', zIndex: 1,
-          borderTop: '1px solid oklch(16% 0.008 265)',
-          paddingTop: '24px',
-          display: 'flex', alignItems: 'center', gap: '36px', flexWrap: 'wrap',
-        }}
-      >
-        <p style={{
-          fontFamily: 'var(--font-body)', fontSize: '10px',
-          color: 'var(--color-muted)', letterSpacing: '0.16em',
-          textTransform: 'uppercase', flexShrink: 0, opacity: 0.5,
-        }}>
-          Experience at
-        </p>
-        {logos.map(({ src, alt }) => (
-          <div key={alt} style={{ position: 'relative', width: 72, height: 24, opacity: 0.45 }}>
-            <Image src={src} alt={alt} fill style={{ objectFit: 'contain' }} />
-          </div>
-        ))}
-      </motion.div>
+        {/* Logo strip */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+          style={{ display: 'flex', alignItems: 'center', gap: '32px', flexWrap: 'wrap' }}
+        >
+          <span style={{
+            fontFamily: 'var(--font-mono)', fontSize: '10px',
+            color: 'var(--color-muted)', letterSpacing: '0.16em',
+            textTransform: 'uppercase', opacity: 0.45, flexShrink: 0,
+          }}>Worked at</span>
+          {logos.map(({ src, alt }) => (
+            <div key={alt} style={{ position: 'relative', width: 64, height: 20, opacity: 0.35 }}>
+              <Image src={src} alt={alt} fill style={{ objectFit: 'contain' }} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   )
 }

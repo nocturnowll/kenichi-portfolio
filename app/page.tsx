@@ -1,17 +1,19 @@
-import { Hero }      from '@/components/sections/Hero'
-import { Community } from '@/components/sections/Community'
-import { Operator }  from '@/components/sections/Operator'
-import { TheEngine } from '@/components/sections/TheEngine'
-import { Connect }   from '@/components/sections/Connect'
+import { Hero }         from '@/components/sections/Hero'
+import { Community }    from '@/components/sections/Community'
+import { Operator }     from '@/components/sections/Operator'
+import { Interstitial } from '@/components/sections/Interstitial'
+import { TheEngine }    from '@/components/sections/TheEngine'
+import { Connect }      from '@/components/sections/Connect'
 
 export default function HomePage() {
   return (
-    <div className="snap-container">
+    <main>
       <Hero />
       <Community />
       <Operator />
+      <Interstitial />
       <TheEngine />
       <Connect />
-    </div>
+    </main>
   )
 }
