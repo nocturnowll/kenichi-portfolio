@@ -2,15 +2,15 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg:           oklch(9%  0.006 265);
-  --color-surface:      oklch(14% 0.008 265);
-  --color-surface-2:    oklch(19% 0.010 265);
-  --color-text:         oklch(93% 0.006 70);
-  --color-muted:        oklch(48% 0.008 265);
-  --color-border:       oklch(20% 0.010 265);
-  --color-accent:       oklch(64% 0.155 42);
-  --color-accent-dim:   oklch(54% 0.140 42);
-  --color-accent-glow:  oklch(60% 0.155 42 / 0.18);
+  --color-bg:           oklch(8%  0.003 240);
+  --color-text:         oklch(93% 0.005 80);
+  --color-orange:       oklch(64% 0.165 42);
+  --color-green:        oklch(74% 0.170 148);
+  --color-surface:      oklch(12% 0.004 240);
+  --color-surface-2:    oklch(15% 0.004 240);
+  --color-muted:        oklch(52% 0.006 240);
+  --color-border:       oklch(18% 0.005 240);
+  --color-accent:       var(--color-orange);
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
   --font-body:    'Onest', system-ui, sans-serif;
   --font-mono:    'Geist Mono', monospace;
@@ -63,15 +63,34 @@ body { overflow-x: hidden; }
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
-    oklch(64% 0.155 42),
-    oklch(52% 0.18  295),
-    oklch(52% 0.20  195),
-    oklch(60% 0.16   42)
+    var(--color-orange),
+    var(--color-surface),
+    var(--color-green),
+    var(--color-orange)
   );
   filter: blur(88px);
   animation: orbSpin 14s linear infinite, orbPulse 5s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.marquee-content {
+  display: inline-flex;
+  gap: 40px;
+  animation: marquee 25s linear infinite;
+  padding-right: 40px;
 }
 
 /* Matrix dot grid */
