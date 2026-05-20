@@ -6,54 +6,33 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '/kenichi-portfolio'
 export function Connect() {
   return (
     <section
-      className="portfolio-section"
+      className="portfolio-section min-h-screen py-24 px-6 md:px-16 flex flex-col justify-center bg-[#080B12] relative overflow-hidden"
       id="connect"
-      style={{
-        backgroundColor: '#080B12',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0 64px',
-      }}
     >
       {/* Soft glow */}
-      <div aria-hidden style={{
-        position: 'absolute', top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '55vw', height: '55vw', borderRadius: '50%',
+      <div aria-hidden className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[55vw] rounded-full pointer-events-none" style={{
         background: 'radial-gradient(ellipse, oklch(60% 0.155 42 / 0.08), transparent 70%)',
-        pointerEvents: 'none',
       }} />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '820px', width: '100%' }}>
+      <div className="relative z-10 w-full max-w-4xl mx-auto">
 
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          style={{
-            fontFamily: 'var(--font-mono)', fontSize: '10px',
-            letterSpacing: '0.2em', textTransform: 'uppercase',
-            color: 'var(--color-muted)', marginBottom: '36px',
-            opacity: 0.5,
-          }}
+          className="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--color-muted)] mb-8 opacity-50 font-bold"
         >
           Open to opportunities
         </motion.p>
 
-        <div style={{ overflow: 'hidden', marginBottom: '28px' }}>
+        <div className="overflow-hidden mb-8">
           <motion.h2
             initial={{ y: '100%' }}
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.95, ease: 'easeOut' }}
-            style={{
-              fontFamily: 'var(--font-display)', fontWeight: 800,
-              fontSize: 'clamp(36px, 6vw, 88px)',
-              letterSpacing: '-0.045em', lineHeight: 0.92,
-              color: 'var(--color-text)',
-            }}
+            className="font-display font-extrabold text-[clamp(36px,6vw,88px)] tracking-tighter leading-[0.92] text-[var(--color-text)]"
           >
             Looking for a
             <br />
@@ -68,11 +47,7 @@ export function Connect() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65, delay: 0.2, ease: 'easeOut' }}
-          style={{
-            fontFamily: 'var(--font-body)', fontSize: '16px',
-            lineHeight: 1.65, color: 'var(--color-muted)',
-            maxWidth: '480px', marginBottom: '52px',
-          }}
+          className="font-body text-base md:text-lg leading-relaxed text-[var(--color-muted)] max-w-lg mb-12"
         >
           Seed to Series B. Remote-only. Targeting founding-team growth hires
           where the brief is "figure it out" and the budget is "prove it first."
@@ -83,28 +58,18 @@ export function Connect() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, delay: 0.3, ease: 'easeOut' }}
-          style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginBottom: '96px' }}
+          className="flex flex-wrap gap-4 md:gap-6 mb-24"
         >
           <a
             href="mailto:kenichiedbert@gmail.com"
-            style={{
-              padding: '14px 32px', borderRadius: '40px',
-              backgroundColor: 'var(--color-accent)', color: '#080B12',
-              fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: '14px',
-              textDecoration: 'none', letterSpacing: '-0.01em',
-            }}
+            className="px-8 py-3.5 rounded-full bg-[var(--color-accent)] text-[#080B12] font-body font-bold text-sm tracking-tight hover:scale-105 transition-transform duration-300"
           >
             Get in touch
           </a>
           <a
             href={`${BASE}/resume/kenichi-yauwanta-growth-resume.pdf`}
             download
-            style={{
-              padding: '14px 32px', borderRadius: '40px',
-              border: '1px solid var(--color-border)', color: 'var(--color-muted)',
-              fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '14px',
-              textDecoration: 'none',
-            }}
+            className="px-8 py-3.5 rounded-full border border-[var(--color-border)] text-[var(--color-muted)] font-body font-medium text-sm hover:text-white hover:border-white/40 transition-colors duration-300"
           >
             Download resume
           </a>
@@ -112,28 +77,17 @@ export function Connect() {
             href="https://linkedin.com/in/kenichiedberty"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              padding: '14px 32px', borderRadius: '40px',
-              border: '1px solid var(--color-border)', color: 'var(--color-muted)',
-              fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '14px',
-              textDecoration: 'none',
-            }}
+            className="px-8 py-3.5 rounded-full border border-[var(--color-border)] text-[var(--color-muted)] font-body font-medium text-sm hover:text-white hover:border-white/40 transition-colors duration-300"
           >
             LinkedIn
           </a>
         </motion.div>
 
-        <div style={{
-          paddingTop: '32px', borderTop: '1px solid oklch(16% 0.008 265)',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        }}>
-          <span style={{
-            fontFamily: 'var(--font-display)', fontWeight: 800,
-            fontSize: '18px', letterSpacing: '-0.03em', color: 'var(--color-text)',
-          }}>
-            KE<span style={{ color: 'var(--color-accent)' }}>/</span>Y
+        <div className="pt-8 border-t border-[var(--color-border)] flex justify-between items-center mt-auto">
+          <span className="font-display font-extrabold text-lg tracking-tight text-[var(--color-text)]">
+            KE<span className="text-[var(--color-accent)]">/</span>Y
           </span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--color-muted)', opacity: 0.4 }}>
+          <span className="font-mono text-[10px] text-[var(--color-muted)] opacity-40 uppercase tracking-widest">
             Kenichi Edbert Yauwanta · 2026
           </span>
         </div>

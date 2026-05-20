@@ -39,7 +39,7 @@ body { overflow-x: hidden; }
 .portfolio-section {
   min-height: 100dvh;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Gemini orb — rotating conic gradient */

@@ -338,7 +338,7 @@ export function TheEngine() {
 
           {/* RIGHT SIDE PANEL: Workspace Preview Screen */}
           <div className="lg:col-span-7 flex flex-col">
-            <div className="flex-1 p-6 border border-[var(--color-border)] rounded-2xl bg-[var(--color-surface)] relative overflow-hidden flex flex-col justify-between shadow-2xl min-h-[480px]">
+            <div className="flex-1 p-6 border border-[var(--color-border)] rounded-2xl bg-[var(--color-surface)] relative overflow-visible lg:overflow-hidden flex flex-col justify-between shadow-2xl min-h-[480px]">
               
               {/* Technical background overlay grids */}
               <div className="absolute inset-0 border border-dashed border-[var(--color-border)]/40 pointer-events-none rounded-2xl m-3" />
@@ -374,7 +374,7 @@ export function TheEngine() {
                   </div>
 
                   {/* Right: Simulated interactive terminal logs */}
-                  <div className="w-full lg:w-1/2 flex flex-col h-[380px] border border-[var(--color-border)] bg-[#030509] rounded-xl overflow-hidden shadow-xl">
+                  <div className="w-full lg:w-1/2 flex flex-col h-[300px] md:h-[380px] border border-[var(--color-border)] bg-[#030509] rounded-xl overflow-hidden shadow-xl">
                     {/* Terminal Window Header */}
                     <div className="flex items-center justify-between px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
                       <div className="flex items-center gap-1.5">
