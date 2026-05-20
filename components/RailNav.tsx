@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const SECTIONS = [
-  { id: '',            label: 'Intro' },
+  { id: 'hero',        label: 'Intro' },
   { id: 'community',   label: 'Community' },
   { id: 'the-work',    label: 'Builder' },
   { id: 'the-engine',  label: 'Engine' },
@@ -11,7 +11,7 @@ const SECTIONS = [
 ]
 
 export function RailNav() {
-  const [activeId, setActiveId] = useState<string>('')
+  const [activeId, setActiveId] = useState<string>('hero')
   const observerRef = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
@@ -20,11 +20,11 @@ export function RailNav() {
     observerRef.current = new IntersectionObserver(
       (intersectionEntries) => {
         for (const entry of intersectionEntries) {
-          const sectionId = entry.target.getAttribute('data-rail-id') ?? ''
+          const sectionId = entry.target.id ?? ''
           entries.set(sectionId, entry.intersectionRatio)
         }
 
-        let bestId = ''
+        let bestId = activeId
         let bestRatio = -1
         entries.forEach((ratio, id) => {
           if (ratio > bestRatio) {
@@ -33,38 +33,30 @@ export function RailNav() {
           }
         })
 
-        if (bestRatio > 0) setActiveId(bestId)
+        if (bestRatio > 0.15) {
+          setActiveId(bestId)
+        }
       },
-      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      { 
+        rootMargin: '-30% 0px -40% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1] 
+      }
     )
 
     const observer = observerRef.current
 
     for (const section of SECTIONS) {
-      if (section.id === '') {
-        const heroEl = document.querySelector('.snap-section')
-        if (heroEl) {
-          heroEl.setAttribute('data-rail-id', '')
-          observer.observe(heroEl)
-        }
-      } else {
-        const el = document.getElementById(section.id)
-        if (el) {
-          el.setAttribute('data-rail-id', section.id)
-          observer.observe(el)
-        }
+      const el = document.getElementById(section.id)
+      if (el) {
+        observer.observe(el)
       }
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [activeId])
 
   function handleClick(id: string) {
-    if (id === '') {
-      document.querySelector('.snap-container')?.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (

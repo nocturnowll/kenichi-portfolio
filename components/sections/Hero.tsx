@@ -4,7 +4,7 @@ import { Placeholder } from '@/components/ui/Placeholder'
 
 export function Hero() {
   return (
-    <section className="portfolio-section min-h-screen relative flex flex-col justify-between px-6 py-12 md:px-16 md:py-20 bg-[var(--color-bg)] overflow-hidden">
+    <section id="hero" className="portfolio-section min-h-screen relative flex flex-col justify-between px-6 py-12 md:px-16 md:py-20 bg-[var(--color-bg)] overflow-hidden">
       {/* Subtle Background Glow */}
       <div 
         className="absolute top-1/4 left-0 w-[50vw] h-[50vw] rounded-full filter blur-[120px] pointer-events-none opacity-20"
