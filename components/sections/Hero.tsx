@@ -4,7 +4,7 @@ import { Placeholder } from '@/components/ui/Placeholder'
 
 export function Hero() {
   return (
-    <section id="hero" className="portfolio-section min-h-screen relative flex flex-col justify-between px-6 py-12 md:px-16 md:py-20 bg-[var(--color-bg)] overflow-hidden">
+    <section id="hero" className="portfolio-section min-h-screen relative flex flex-col justify-between px-6 py-12 md:px-20 lg:px-24 md:py-20 bg-[var(--color-bg)] overflow-hidden">
       {/* Subtle Background Glow */}
       <div 
         className="absolute top-1/4 left-0 w-[50vw] h-[50vw] rounded-full filter blur-[120px] pointer-events-none opacity-20"
@@ -72,22 +72,24 @@ export function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45 }}
-            className="flex flex-wrap gap-8 items-center border-t border-[var(--color-border)] pt-8 mt-4"
+            className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-t border-[var(--color-border)] pt-8 mt-8 w-full"
           >
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-muted)] mb-1">Positioning</p>
-              <p className="font-body text-sm font-medium text-white/80">Growth Lead & Founding GTM</p>
-            </div>
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-muted)] mb-1">Based In</p>
-              <p className="font-body text-sm font-medium text-white/80">Indonesia (WIB, UTC+8)</p>
+            <div className="flex flex-wrap gap-8 items-center">
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-muted)] mb-1">Positioning</p>
+                <p className="font-body text-sm font-medium text-white/80">Growth Lead & Founding GTM</p>
+              </div>
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-muted)] mb-1">Based In</p>
+                <p className="font-body text-sm font-medium text-white/80">Indonesia (WIB, UTC+8)</p>
+              </div>
             </div>
             
             {/* CTA Trigger */}
-            <div className="ml-auto">
+            <div className="shrink-0 sm:ml-auto">
               <a
                 href="#community"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-body font-bold text-xs bg-[var(--color-orange)] text-[var(--color-bg)] transition-transform duration-300 hover:scale-105"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-body font-bold text-xs bg-[var(--color-orange)] text-[var(--color-bg)] transition-transform duration-300 hover:scale-105 whitespace-nowrap shrink-0"
               >
                 See the work
                 <span className="text-[10px]">↓</span>

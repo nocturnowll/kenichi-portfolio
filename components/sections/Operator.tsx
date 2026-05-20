@@ -11,7 +11,7 @@ const inV = (delay = 0) => ({
 
 export function Operator() {
   return (
-    <section className="portfolio-section min-h-screen py-20 px-6 md:px-16 flex flex-col justify-center bg-[var(--color-bg)] relative overflow-hidden" id="the-work">
+    <section className="portfolio-section min-h-screen py-24 px-6 md:px-20 lg:px-24 flex flex-col justify-center bg-[var(--color-bg)] relative overflow-hidden" id="the-work">
       {/* Grid cross lines background */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[size:40px_40px]" 
            style={{ backgroundImage: `linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)` }} />

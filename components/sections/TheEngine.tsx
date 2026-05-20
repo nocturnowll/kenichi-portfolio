@@ -179,7 +179,7 @@ export function TheEngine() {
   }, [terminalLogs])
 
   return (
-    <section className="portfolio-section min-h-screen py-24 px-6 md:px-16 bg-[#04060b] relative overflow-hidden" id="the-engine">
+    <section className="portfolio-section min-h-screen py-24 px-6 md:px-20 lg:px-24 bg-[#04060b] relative overflow-hidden" id="the-engine">
       {/* Background digital gridlines */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[size:30px_30px]" 
            style={{ backgroundImage: `linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)` }} />
@@ -338,7 +338,7 @@ export function TheEngine() {
 
           {/* RIGHT SIDE PANEL: Workspace Preview Screen */}
           <div className="lg:col-span-7 flex flex-col">
-            <div className="flex-1 p-6 border border-[var(--color-border)] rounded-2xl bg-[var(--color-surface)] relative overflow-visible lg:overflow-hidden flex flex-col justify-between shadow-2xl min-h-[480px]">
+            <div className="flex-1 p-4 sm:p-6 border border-[var(--color-border)] rounded-2xl bg-[var(--color-surface)] relative overflow-visible lg:overflow-hidden flex flex-col justify-between shadow-2xl lg:min-h-[580px] h-auto w-full">
               
               {/* Technical background overlay grids */}
               <div className="absolute inset-0 border border-dashed border-[var(--color-border)]/40 pointer-events-none rounded-2xl m-3" />

@@ -12,7 +12,7 @@ const inV = (delay = 0) => ({
 
 export function Community() {
   return (
-    <section className="portfolio-section min-h-screen py-20 px-6 md:px-16 flex flex-col justify-center bg-[var(--color-bg)] relative overflow-hidden" id="community">
+    <section className="portfolio-section min-h-screen pt-24 pb-36 md:pt-28 md:pb-44 px-6 md:px-20 lg:px-24 flex flex-col justify-center bg-[var(--color-bg)] relative overflow-hidden" id="community">
       {/* Background Decorative Elements */}
       <div className="matrix-dots opacity-40" />
 

@@ -6,7 +6,7 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '/kenichi-portfolio'
 export function Connect() {
   return (
     <section
-      className="portfolio-section min-h-screen py-24 px-6 md:px-16 flex flex-col justify-center bg-[#080B12] relative overflow-hidden"
+      className="portfolio-section min-h-screen py-24 px-6 md:px-20 lg:px-24 flex flex-col justify-center bg-[#080B12] relative overflow-hidden"
       id="connect"
     >
       {/* Soft glow */}

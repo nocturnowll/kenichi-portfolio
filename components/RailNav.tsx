@@ -62,17 +62,7 @@ export function RailNav() {
   return (
     <nav
       aria-label="Page sections"
-      style={{
-        position: 'fixed',
-        right: '28px',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 60,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '18px',
-        alignItems: 'flex-end',
-      }}
+      className="fixed right-7 top-1/2 -translate-y-1/2 z-50 xl:flex hidden flex-col gap-[18px] items-end select-none"
     >
       {SECTIONS.map((section) => {
         const isActive = activeId === section.id
@@ -83,40 +73,28 @@ export function RailNav() {
             key={key}
             onClick={() => handleClick(section.id)}
             aria-label={`Go to ${section.label}`}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0,
-            }}
+            className="flex items-center gap-2 bg-transparent border-0 cursor-pointer p-0 outline-none group"
           >
-            <span style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '9px',
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: isActive ? 'var(--color-accent)' : 'var(--color-muted)',
-              opacity: isActive ? 1 : 0,
-              transition: 'opacity 0.25s ease, color 0.25s ease',
-              whiteSpace: 'nowrap',
-              userSelect: 'none',
-            }}>
+            <span
+              className={`font-mono text-[9px] tracking-[0.14em] uppercase transition-all duration-300 ease-out whitespace-nowrap select-none ${
+                isActive
+                  ? 'text-[var(--color-accent)] opacity-100 translate-x-0'
+                  : 'text-[var(--color-muted)] opacity-0 translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-white'
+              }`}
+            >
               {section.label}
             </span>
-            <div style={{
-              width: isActive ? '28px' : '12px',
-              height: '1.5px',
-              backgroundColor: isActive ? 'var(--color-accent)' : 'oklch(35% 0.008 265)',
-              borderRadius: '2px',
-              transition: 'width 0.3s ease, background-color 0.3s ease',
-              flexShrink: 0,
-            }} />
+            <div
+              className={`h-[1.5px] rounded-[2px] shrink-0 transition-all duration-300 ease-out ${
+                isActive
+                  ? 'w-7 bg-[var(--color-accent)]'
+                  : 'w-3 bg-white/20 group-hover:bg-white/60 group-hover:w-4'
+              }`}
+            />
           </button>
         )
       })}
     </nav>
   )
 }
+
