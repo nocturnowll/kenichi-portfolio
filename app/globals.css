@@ -10,14 +10,20 @@
   --color-muted:        oklch(52% 0.006 240);
   --color-border:       oklch(18% 0.005 240);
   --color-accent:       var(--color-orange);
+
+  /* Brand color mappings for backward compatibility */
+  --color-brand-orange: var(--color-orange);
+  --color-brand-orange-muted: oklch(64% 0.165 42 / 0.7);
+  --color-brand-text: var(--color-text);
+  --color-brand-muted: var(--color-muted);
+  --color-brand-surface: var(--color-surface);
+
   --font-display: var(--font-display), system-ui, sans-serif;
   --font-body:    var(--font-body), system-ui, sans-serif;
   --font-mono:    var(--font-mono), monospace;
   --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
   --ease-quart:   cubic-bezier(0.25, 1, 0.5, 1);
 }
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
   background: var(--color-bg);

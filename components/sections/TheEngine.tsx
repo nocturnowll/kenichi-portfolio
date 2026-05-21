@@ -139,7 +139,7 @@ export function TheEngine() {
   const [terminalLogs, setTerminalLogs] = useState<string[]>([])
   const [isStreaming, setIsStreaming] = useState(false)
   const [streamIndex, setStreamIndex] = useState(0)
-  const terminalEndRef = useRef<HTMLDivElement>(null)
+  const terminalContainerRef = useRef<HTMLDivElement>(null)
 
   const activeCreative = creativeProjects.find((p) => p.id === activeCreativeId) || creativeProjects[0]
   const activeAutomation = automationProjects.find((p) => p.id === activeAutomationId) || automationProjects[0]
@@ -172,9 +172,9 @@ export function TheEngine() {
   }, [streamIndex, isStreaming, activeAutomationId])
 
   useEffect(() => {
-    // Scroll terminal to bottom
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    // Scroll terminal container to bottom (prevents hijacking window page-level scroll)
+    if (terminalContainerRef.current) {
+      terminalContainerRef.current.scrollTop = terminalContainerRef.current.scrollHeight
     }
   }, [terminalLogs])
 
@@ -395,7 +395,7 @@ export function TheEngine() {
                     </div>
 
                     {/* Terminal Display Logs Canvas */}
-                    <div className="flex-1 p-4 font-mono text-[9px] leading-relaxed text-white/70 overflow-y-auto flex flex-col gap-2 scrollbar-none select-text">
+                    <div ref={terminalContainerRef} className="flex-1 p-4 font-mono text-[9px] leading-relaxed text-white/70 overflow-y-auto flex flex-col gap-2 scrollbar-none select-text">
                       {terminalLogs.map((log, index) => {
                         const isSystem = log.includes('[SYSTEM]')
                         let colorClass = 'text-white/60'
@@ -418,8 +418,6 @@ export function TheEngine() {
                           <span className="w-1 h-3 bg-[var(--color-green)] animate-blink" />
                         </div>
                       )}
-                      
-                      <div ref={terminalEndRef} />
                     </div>
                   </div>
                 </div>
